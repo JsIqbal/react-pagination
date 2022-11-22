@@ -8,14 +8,16 @@ const App = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  const [postsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true);
-      const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-      setPosts(res.data);
-      setLoading(false);
+      setTimeout(async () => {
+        const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+        setPosts(res.data);
+        setLoading(false);
+      }, 3000);
     };
 
     fetchPosts();
