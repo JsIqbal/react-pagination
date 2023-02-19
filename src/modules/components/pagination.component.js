@@ -17,7 +17,13 @@ const Pagination = ({
     const fetchPosts = async (pageNumber) => {
         try {
             const response = await axios.get(
-                `https://app.cesomni.com/sms/test/?page=${pageNumber}`
+                `https://app.cesomni.com/sms/test/?page=${pageNumber}&campaign_name=null&masking=null&reciever=null&delivery_status=null&contenType=null&startTime=null&endTime=null&text=null`,
+                {
+                    headers: {
+                        Authorization: `Token f8a96d686224ebef05ed84a4cabe2979b7ec0c16`,
+                        "Content-Type": "application/json",
+                    },
+                }
             );
             setPosts(response.data.results || []);
             paginate(pageNumber);
