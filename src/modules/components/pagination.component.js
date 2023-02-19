@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const Pagination = ({
@@ -7,7 +7,19 @@ const Pagination = ({
     paginate,
     currentPage,
     setPosts,
+    formData,
 }) => {
+    // const [formData, setFormData] = useState({
+    //     startTime: "null",
+    //     endTime: "null",
+    //     masking: "null",
+    //     campaign_name: "null",
+    //     campaignType: "null",
+    //     text: "null",
+    //     campaignCreator: "null",
+    //     campaignStatus: "null",
+    //     campaignCategory: "null",
+    // });
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
@@ -17,7 +29,7 @@ const Pagination = ({
     const fetchPosts = async (pageNumber) => {
         try {
             const response = await axios.get(
-                `https://app.cesomni.com/sms/test/?page=${pageNumber}&campaign_name=null&masking=null&reciever=null&delivery_status=null&contenType=null&startTime=null&endTime=null&text=null`,
+                `https://app.cesomni.com/sms/campaign-report/?page=${pageNumber}&startTime=${formData.startTime}&endTime=${formData.endTime}&masking=${formData.masking}&campaign_name=${formData.campaign_name}&campaignCreator=${formData.campaignCreator}&campaignStatus=${formData.campaignStatus}&campaignType=${formData.campaignType}&campaignCategory=${formData.campaignCategory}`,
                 {
                     headers: {
                         Authorization: `Token f8a96d686224ebef05ed84a4cabe2979b7ec0c16`,

@@ -2,11 +2,7 @@ import React from "react";
 
 const Posts = ({ posts, loading }) => {
     const headers = [
-        "Delivery_Status",
-        "Reciever",
-        "Sender",
-        "Text",
-        "Time",
+        "id",
         "campaign_Name",
         "campaign_Time",
         "campaign_category",
@@ -16,15 +12,12 @@ const Posts = ({ posts, loading }) => {
         "endDateTime",
         "expected_expense",
         "expected_impression",
-        "id",
+
         "masking",
         "message",
         "startDateTime",
         "total_expense",
         "total_impression",
-        "content_type",
-        "cost",
-        "sms_type",
     ];
 
     if (loading) {
@@ -34,7 +27,25 @@ const Posts = ({ posts, loading }) => {
         <div className="card" style={{ borderRadius: "0px" }}>
             <div className="card-body">
                 <div className="table-responsive">
-                    <table className="table table-striped">
+                    <table className="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                {headers.map((header) => (
+                                    <th key={header}>{header}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {posts.map((item, index) => (
+                                <tr key={item.id}>
+                                    {headers.map((header) => (
+                                        <td key={header}>{item[header]}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {/* <table className="table table-striped">
                         <thead>
                             <tr>
                                 {headers.map((header) => (
@@ -46,6 +57,7 @@ const Posts = ({ posts, loading }) => {
                             {posts?.map((item, index) => {
                                 return (
                                     <tr key={item?.id}>
+                                        <td className="py-1">{`${item?.id}`}</td>
                                         <td className="py-1">{`${item?.Delivery_Status}`}</td>
                                         <td className="py-1">{`${item?.Reciever}`}</td>
                                         <td className="py-1">{`${item?.Sender}`}</td>
@@ -73,7 +85,7 @@ const Posts = ({ posts, loading }) => {
                                 );
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
             </div>
         </div>

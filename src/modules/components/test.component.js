@@ -1,72 +1,7 @@
-// import axios from "axios";
-// import React, { useState, useEffect } from "react";
-// import Posts from "./post.component";
-// import Pagination from "./pagination.component";
-// import MyForm from "./filter.component";
-
-// const Test = () => {
-//     const [posts, setPosts] = useState([]);
-//     const [loading, setLoading] = useState(false);
-//     const [currentPage, setCurrentPage] = useState(1);
-//     const [postsPerPage] = useState(10);
-//     const [count, setCount] = useState(0);
-//     const [formData, setFormData] = useState({
-//         firstName: "",
-//         lastName: "",
-//         dateOfBirth: "",
-//         expirationDate: "",
-//     });
-//     useEffect(() => {
-//         const getData = async () => {
-//             try {
-//                 const response = await axios.get(
-//                     `https://app.cesomni.com/sms/test/`,
-//                     {
-//                         headers: {
-//                             Authorization: `Token f8a96d686224ebef05ed84a4cabe2979b7ec0c16`,
-//                             "Content-Type": "application/json",
-//                         },
-//                     }
-//                 );
-//                 setPosts(response.data.results || []);
-//                 setCount(response.data.count || 0);
-//                 console.log(response);
-//             } catch (error) {
-//                 setPosts([]);
-//                 setCount(0);
-//             }
-//         };
-//         getData();
-//     }, []);
-
-//     const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-//     return (
-//         <div className="container">
-//             <MyForm
-//                 className="mt-5 mb-5"
-//                 formData={formData}
-//                 setFormData={setFormData}
-//             />
-//             <Posts posts={posts} loading={loading} />
-//             <Pagination
-//                 postsPerPage={postsPerPage}
-//                 totalPosts={count}
-//                 paginate={paginate}
-//                 currentPage={currentPage}
-//                 setPosts={setPosts}
-//             />
-//         </div>
-//     );
-// };
-
-// export default Test;
-
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Posts from "./post.component";
 import Pagination from "./pagination.component";
-// import MyForm from "./filter.component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
@@ -81,15 +16,16 @@ const Test = () => {
         endTime: "null",
         masking: "null",
         campaign_name: "null",
-        reciever: "null",
-        delivery_status: "null",
-        contenType: "null",
+        campaignType: "null",
         text: "null",
+        campaignCreator: "null",
+        campaignStatus: "null",
+        campaignCategory: "null",
     });
 
-    const url = `https://app.cesomni.com/sms/test/?campaign_name=${formData.campaign_name}&masking=${formData.masking}&reciever=${formData.reciever}&delivery_status=${formData.delivery_status}&contenType=${formData.contenType}&startTime=${formData.startTime}&endTime=${formData.endTime}&text=${formData.text}`;
+    // const url = `https://app.cesomni.com/sms/test/?campaign_name=${formData.campaign_name}&masking=${formData.masking}&reciever=${formData.reciever}&delivery_status=${formData.delivery_status}&contenType=${formData.contenType}&startTime=${formData.startTime}&endTime=${formData.endTime}&text=${formData.text}`;
+    const url = `https://app.cesomni.com/sms/campaign-report/?startTime=${formData.startTime}&endTime=${formData.endTime}&masking=${formData.masking}&campaign_name=${formData.campaign_name}&campaignCreator=${formData.campaignCreator}&campaignStatus=${formData.campaignStatus}&campaignType=${formData.campaignType}&campaignCategory=${formData.campaignCategory}`;
 
-    // &reciever=${formData.reciever}&delivery_status=${formData.delivery_status}&contenType=${formData.contenType}&startTime=${formData.startTime}&endTime=${formData.endTime}
     const getData = async () => {
         try {
             const response = await axios.get(url, {
@@ -107,8 +43,6 @@ const Test = () => {
         }
     };
     useEffect(() => {
-        // rubayet_child_numberList
-
         getData();
     }, []);
 
@@ -126,24 +60,6 @@ const Test = () => {
         e.preventDefault();
         getData();
     };
-    // const handleDownload = async () => {
-    //     try {
-    //         const response = await axios.get(
-    //             // &reciever=${formData.reciever}&delivery_status=${formData.delivery_status}&contenType=${formData.contenType}&startTime=${formData.startTime}&endTime=${formData.endTime}
-    //             `https://app.cesomni.com/sms/testDownload/?Token=f8a96d686224ebef05ed84a4cabe2979b7ec0c16&campaign_name=${formData.campaign_name}&masking=${formData.masking}`,
-    //             {
-    //                 headers: {
-    //                     Authorization: `Token f8a96d686224ebef05ed84a4cabe2979b7ec0c16`,
-    //                     "Content-Type": "application/json",
-    //                 },
-    //             }
-    //         );
-    //         console.log(response);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
     return (
         <div className="container">
             <Form className="mt-4 mb-4" onSubmit={handleSubmit}>
@@ -192,12 +108,12 @@ const Test = () => {
                 </Form.Group>
 
                 <Form.Group controlId="reciever">
-                    <Form.Label>reciever</Form.Label>
+                    <Form.Label>campaign Type</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter reciever"
-                        name="reciever"
-                        value={formData.reciever}
+                        placeholder="campaignType"
+                        name="campaignType"
+                        value={formData.campaignType}
                         onChange={handleChange}
                     />
                 </Form.Group>
@@ -238,6 +154,7 @@ const Test = () => {
 
             <Posts posts={posts} loading={loading} />
             <Pagination
+                formData={formData}
                 postsPerPage={postsPerPage}
                 totalPosts={count}
                 paginate={paginate}
@@ -249,5 +166,3 @@ const Test = () => {
 };
 
 export default Test;
-// &reciever=${formData.reciever}&delivery_status=${formData.delivery_status}&contenType=${formData.contenType}&startTime=${formData.startTime}&endTime=${formData.endTime}
-// `https://app.cesomni.com/sms/testDownload/?Token=f8a96d686224ebef05ed84a4cabe2979b7ec0c16&campaign_name=${formData.campaign_name}&masking=${formData.masking}`;
