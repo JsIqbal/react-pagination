@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Table = () => {
+    const [selectedRow, setSelectedRow] = useState(null);
 
-export default App;
+    const data = [
+        { id: 1, name: "John", age: 30 },
+        { id: 2, name: "Mary", age: 25 },
+        { id: 3, name: "Bob", age: 40 },
+    ];
+
+    const handleRowClick = (id) => {
+        setSelectedRow(id);
+    };
+
+    return (
+        <>
+            {selectedRow && (
+                <div className="alert alert-primary mb-3">
+                    <a href="#">Link to top of table</a>
+                </div>
+            )}
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((item) => (
+                        <tr
+                            key={item.id}
+                            onClick={() => handleRowClick(item.id)}
+                            className={
+                                selectedRow === item.id ? "table-primary" : ""
+                            }
+                        >
+                            <td>{item.id}</td>
+                            <td>{item.name}</td>
+                            <td>{item.age}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+    );
+};
+
+export default Table;
